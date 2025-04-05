@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Court Time Calculator</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 2rem auto;
+        max-width: 600px;
+        padding: 0 1rem;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      input {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        width: 100%;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      #result {
+        margin-top: 1rem;
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Court Time Calculator</h1>
+
+    <div class="form-group">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="judges">Number of Judges:</label>
+      <input type="number" id="judges" min="1" required />
+    </div>
+
+    <div class="form-group">
+      <label for="others">Other Names (space-separated):</label>
+      <input
+        type="text"
+        id="others"
+        required
+        placeholder="e.g. Adam Betty Frank Mike"
+      />
+    </div>
+
+    <button onclick="calculateTime()">Calculate Time</button>
+
+    <div id="result"></div>
+
+    <script>
+      /*
+       * Court Function
+       * @function court
+       * @description Calculates the time until your hearing ends based on the number of judges and other names in the court.
+       * @param {string} name - User's name
+       * @param {number} judges - Number of judges
+       * @param {string} others - Other names in the court
+       */
+      function court(name, judges, others) {
+        // Convert input to array
+        const names = [...others.split(' '), name];
+
+        // Sort names
+        names.sort();
+
+        // Find the user's position
+        const position = names.indexOf(name);
+
+        // Calculate time
+        return Math.ceil((position + 1) / judges) * 30;
+      }
+
+      /*
+       * Benchmark Function
+       * @function benchmark
+       * @description Measures the performance of the court function by running it through many iterations using test scenarios.
+       * @param {number} iterations - Number of times to run the test
+       * @returns {string} - Time taken for the benchmark
+       */
+      function benchmark(iterations) {
+        // Test cases
+        const tests = [
+          ['Jules', 3, 'Adam Betty Frank Mike'],
+          ['Zane', 1, 'Mark Hank Ana Vivian'],
+          ['Bob', 2, 'Alice Carol David Eve'],
+          ['Quinn', 4, 'Paul Lucy Kate John'],
+          ['Emma', 5, 'Yuri Wade Sara Theo'],
+          ['Oscar', 2, 'Nina Mary Ivan Rose'],
+          ['Diana', 3, 'Greg Tara Ryan Pete'],
+          ['Henry', 1, 'Xena Iris Jack Will'],
+          ['Chris', 5, 'Liam Mira Nora Olga'],
+          ['Tyler', 4, 'Zoey Abby Finn Dale'],
+        ];
+
+        // Capture start time
+        const start = Date.now();
+
+        // Run the court function for the specified number of iterations
+        for (let i = 0; i < iterations; i++) {
+          tests.forEach((test) => court(...test));
+        }
+
+        // Capture end time
+        const end = Date.now();
+
+        // Calculate and return the time taken
+        return `${iterations} iterations took ${(end - start).toFixed(3)}ms`;
+      }
+
+      /*
+       * Calculate Time Function
+       * @function calculateTime
+       * @description Gathers input values, validates them, calls the court and benchmark functions, and displays the results.
+       * @param {void}
+       * @returns {void}
+       */
+      function calculateTime() {
+        // Get input values
+        const name = document.getElementById('name').value;
+        const judges = parseInt(document.getElementById('judges').value);
+        const others = document.getElementById('others').value;
+
+        // Validate inputs
+        if (!name || !judges || !others) {
+          alert('Please fill in all fields');
+          return;
+        }
+
+        // Get the time until the hearing ends
+        const time = court(name, judges, others);
+
+        // Run the benchmark
+        const benchmarkResult = benchmark(100000);
+
+        // Display the results
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+          <h3>Results:</h3>
+          <p>Your hearing will end in: ${time} minutes</p>
+          <p>Performance: ${benchmarkResult}</p>
+        `;
+      }
+    </script>
+  </body>
+</html>
