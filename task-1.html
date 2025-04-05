@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kagi Task 1</title>
+    <style>
+      /* Base styles */
+      body {
+        color: #282828;
+        font-family: sans-serif;
+        line-height: 1.5;
+        margin: 0 auto;
+        max-width: 1200px;
+      }
+
+      /* Widget container */
+      .widgets-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        padding: 1em;
+      }
+
+      @media (min-width: 768px) {
+        .widgets-container {
+          flex-direction: row;
+        }
+      }
+
+      /* Recipe widget */
+      .recipe-widget {
+        background-color: white;
+        border: 1px solid #e8e8e8;
+        border-radius: 8px;
+        flex: 1;
+        margin: 0 auto;
+        max-height: min-content;
+        padding: 1em;
+        width: 70vw;
+      }
+
+      .ingredient-item {
+        align-items: flex-start;
+        display: flex;
+        margin-bottom: 8px;
+      }
+
+      .ingredient-item input[type='checkbox'] {
+        margin-right: 8px;
+        margin-top: 5px;
+      }
+
+      /* Text content */
+      .text-content p {
+        margin-bottom: 8px;
+      }
+
+      /* Hidden content */
+      .hidden-ingredients,
+      .hidden-text {
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      /* Toggle control */
+      .toggle-control {
+        margin-top: 16px;
+        text-align: center;
+      }
+
+      .toggle-checkbox {
+        display: none;
+      }
+
+      .toggle-label {
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+        padding: 8px 16px;
+      }
+
+      .toggle-label:hover {
+        background-color: #f8f8f8;
+      }
+
+      .toggle-label.show-less {
+        display: none;
+      }
+
+      /* Toggle functionality */
+      .toggle-checkbox:checked ~ .toggle-label.show-more {
+        display: none;
+      }
+
+      .toggle-checkbox:checked ~ .toggle-label.show-less {
+        display: inline-block;
+      }
+
+      .toggle-checkbox:checked ~ .hidden-ingredients,
+      .toggle-checkbox:checked ~ .hidden-text {
+        max-height: 1000px;
+      }
+
+      .toggle-checkbox:checked
+        + .hidden-ingredients
+        + .toggle-control
+        .show-more,
+      .toggle-checkbox:checked + .hidden-text + .toggle-control .show-more {
+        display: none;
+      }
+
+      .toggle-checkbox:checked
+        + .hidden-ingredients
+        + .toggle-control
+        .show-less,
+      .toggle-checkbox:checked + .hidden-text + .toggle-control .show-less {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="widgets-container">
+      <!-- Example 1: Recipe with checkboxes -->
+      <div class="recipe-widget">
+        <h2>Meat Lasagna Recipe</h2>
+
+        <div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing1" />
+            <label for="ing1">1 pound sweet Italian sausage</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing2" />
+            <label for="ing2">3/4 pound lean ground beef</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing3" />
+            <label for="ing3">1/2 cup minced onion</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing4" />
+            <label for="ing4">2 cloves garlic, crushed</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing5" />
+            <label for="ing5">1 (28 ounce) can crushed tomatoes</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing6" />
+            <label for="ing6">2 (6 ounce) cans tomato paste</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing7" />
+            <label for="ing7">2 (6.5 ounce) cans canned tomato sauce</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing8" />
+            <label for="ing8">1/2 cup water</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing9" />
+            <label for="ing9">2 tablespoons white sugar</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing10" />
+            <label for="ing10">1 1/2 teaspoons dried basil leaves</label>
+          </div>
+        </div>
+
+        <input type="checkbox" id="toggle1" class="toggle-checkbox" />
+
+        <div class="hidden-ingredients">
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing11" />
+            <label for="ing11">1/2 teaspoon fennel seeds</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing12" />
+            <label for="ing12">1 teaspoon Italian seasoning</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing13" />
+            <label for="ing13"
+              >1 1/2 teaspoons salt, divided, or to taste</label
+            >
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing14" />
+            <label for="ing14">1/4 teaspoon ground black pepper</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing15" />
+            <label for="ing15">4 tablespoons chopped fresh parsley</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing16" />
+            <label for="ing16">12 lasagna noodles</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing17" />
+            <label for="ing17">16 ounces ricotta cheese</label>
+          </div>
+          <div class="ingredient-item">
+            <input type="checkbox" id="ing18" />
+            <label for="ing18">1 egg</label>
+          </div>
+        </div>
+
+        <div class="toggle-control">
+          <label for="toggle1" class="toggle-label show-more">Show more</label>
+          <label for="toggle1" class="toggle-label show-less">Show less</label>
+        </div>
+      </div>
+
+      <!-- Example 2: Recipe with text only -->
+      <div class="recipe-widget">
+        <h2>Extended Lasagna Recipe</h2>
+
+        <div class="text-content">
+          <p>1 pound sweet Italian sausage</p>
+          <p>3/4 pound lean ground beef</p>
+          <p>1/2 cup minced onion</p>
+          <p>2 cloves garlic, crushed</p>
+          <p>1 (28 ounce) can crushed tomatoes</p>
+          <p>1 (6 ounce) can tomato paste</p>
+          <p>2 (6.5 ounce) cans canned tomato sauce</p>
+          <p>1/2 cup water</p>
+          <p>2 tablespoons white sugar</p>
+          <p>1 1/2 teaspoons dried basil leaves</p>
+        </div>
+
+        <input type="checkbox" id="toggle2" class="toggle-checkbox" />
+
+        <div class="hidden-text">
+          <p>1/2 teaspoon fennel seeds</p>
+          <p>1 teaspoon Italian seasoning</p>
+          <p>1 1/2 teaspoons salt, divided, or to taste</p>
+          <p>1/4 teaspoon ground black pepper</p>
+          <p>4 tablespoons chopped fresh parsley</p>
+          <p>12 lasagna noodles</p>
+          <p>16 ounces ricotta cheese</p>
+          <p>1 egg</p>
+          <p>3/4 pound mozzarella cheese, sliced</p>
+          <p>3/4 cup grated Parmesan cheese</p>
+          <p>2 cloves garlic, crushed</p>
+        </div>
+
+        <div class="toggle-control">
+          <label for="toggle2" class="toggle-label show-more">Show more</label>
+          <label for="toggle2" class="toggle-label show-less">Show less</label>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
