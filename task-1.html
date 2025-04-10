@@ -61,6 +61,7 @@
       .hidden-text {
         max-height: 0;
         overflow: hidden;
+        transition: max-height 0.3s ease-out;
       }
 
       /* Toggle control */
@@ -78,6 +79,7 @@
         cursor: pointer;
         display: inline-block;
         padding: 8px 16px;
+        transition: background-color 0.2s;
       }
 
       .toggle-label:hover {
@@ -100,6 +102,7 @@
       .toggle-checkbox:checked ~ .hidden-ingredients,
       .toggle-checkbox:checked ~ .hidden-text {
         max-height: 1000px;
+        transition: max-height 0.5s ease-in;
       }
 
       .toggle-checkbox:checked
