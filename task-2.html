@@ -130,28 +130,13 @@
        * @param {string} others - Other names in the court
        */
       function court(name, judges, others) {
-        // Convert input to array
-        const names = [...others.trim().split(/\s+/)];
+        // Convert input to array, handle multiple spaces
+        const names = others.split(' ').filter(Boolean);
 
-        // Sort names
-
-        /* .sort() is extremely simple and reliable,
-         * but its worst-case time complexity is O(n log n).
-         * Additionally, in this case, we don't need to sort the names,
-         * we only need to find the position of the name in the sorted list.
-         */
-        // names.sort();
-
-        /*
-         * Instead of truly sorting, we can find the
-         * position of the name in the sorted list,
-         * making the time complexity O(n) - much better.
-         */
+        // Find the position of the user's name in the hypothetical sorted list
         let position = 0;
-        for (const other of names) {
-          if (other < name) {
-            position++;
-          }
+        for (let i = 0; i < names.length; i++) {
+          if (names[i] < name) position++;
         }
 
         // Calculate time
