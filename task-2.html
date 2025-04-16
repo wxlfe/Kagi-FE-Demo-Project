@@ -130,19 +130,29 @@
        * @param {string} others - Other names in the court
        */
       function court(name, judges, others) {
-        // Prevent composite names
-        if (name.includes(' ')) {
-          name = name.split(' ')[0];
-        }
-
         // Convert input to array
-        const names = [...others.split(' '), name];
+        const names = [...others.trim().split(/\s+/)];
 
         // Sort names
-        names.sort();
 
-        // Find the user's position
-        const position = names.indexOf(name);
+        /* .sort() is extremely simple and reliable,
+         * but its worst-case time complexity is O(n log n).
+         * Additionally, in this case, we don't need to sort the names,
+         * we only need to find the position of the name in the sorted list.
+         */
+        // names.sort();
+
+        /*
+         * Instead of truly sorting, we can find the
+         * position of the name in the sorted list,
+         * making the time complexity O(n) - much better.
+         */
+        let position = 0;
+        for (const other of names) {
+          if (other < name) {
+            position++;
+          }
+        }
 
         // Calculate time
         return Math.ceil((position + 1) / judges) * 30;
