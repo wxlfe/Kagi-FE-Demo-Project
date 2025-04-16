@@ -186,10 +186,10 @@
        * @returns {void}
        */
       function calculateTime() {
-        // Get input values
-        const name = document.getElementById('name').value;
+        // Get input values, set strings to lowercase for sorting purposes
+        const name = document.getElementById('name').value.toLowerCase();
         const judges = parseInt(document.getElementById('judges').value);
-        const others = document.getElementById('others').value;
+        const others = document.getElementById('others').value.toLowerCase();
 
         // Validate inputs
         if (!name || !judges || !others) {
