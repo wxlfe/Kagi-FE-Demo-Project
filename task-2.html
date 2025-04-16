@@ -130,19 +130,14 @@
        * @param {string} others - Other names in the court
        */
       function court(name, judges, others) {
-        // Prevent composite names
-        if (name.includes(' ')) {
-          name = name.split(' ')[0];
+        // Convert input to array, handle multiple spaces
+        const names = others.split(' ').filter(Boolean);
+
+        // Find the position of the user's name in the hypothetical sorted list
+        let position = 0;
+        for (let i = 0; i < names.length; i++) {
+          if (names[i] < name) position++;
         }
-
-        // Convert input to array
-        const names = [...others.split(' '), name];
-
-        // Sort names
-        names.sort();
-
-        // Find the user's position
-        const position = names.indexOf(name);
 
         // Calculate time
         return Math.ceil((position + 1) / judges) * 30;
@@ -186,10 +181,13 @@
        * @returns {void}
        */
       function calculateTime() {
-        // Get input values
-        const name = document.getElementById('name').value;
+        // Get input values, set strings to lowercase for sorting purposes
+        const name = document
+          .getElementById('name')
+          .value.toLowerCase()
+          .split(' ')[0];
         const judges = parseInt(document.getElementById('judges').value);
-        const others = document.getElementById('others').value;
+        const others = document.getElementById('others').value.toLowerCase();
 
         // Validate inputs
         if (!name || !judges || !others) {
